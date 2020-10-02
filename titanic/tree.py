@@ -5,12 +5,13 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 import graphviz
 import pydotplus
 from IPython.display import Image
-from sklearn.externals.six import StringIO
+#from sklearn.externals.six import StringIO
+from six import StringIO
 
 
 # read csv data
-train_path = "../train.csv"
-test_path = "../test.csv"
+train_path = "./dat/train.csv"
+test_path = "./dat/test.csv"
 
 train = pd.read_csv(train_path)
 test = pd.read_csv(test_path)
@@ -21,7 +22,7 @@ def kesson_table(df):
         percent = 100 * df.isnull().sum()/len(df)
         kesson_table = pd.concat([null_val, percent], axis=1)
         kesson_table_ren_columns = kesson_table.rename(
-        columns = {0 : '欠損数', 1 : '%'})
+        columns = {0 : 'Defects', 1 : '%'})
         return kesson_table_ren_columns
 
 # check
