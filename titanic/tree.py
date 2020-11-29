@@ -1,3 +1,4 @@
+# https://qiita.com/suzuki-navi/items/d0e33a5379b4bfb848bc 
 import pandas as pd
 import numpy as np
 from sklearn import tree
@@ -42,17 +43,13 @@ print(kesson_table(test))
 
 
 # change word to number
-train["Sex"][train["Sex"] == "male"] = 0
-train["Sex"][train["Sex"] == "female"] = 1
-train["Embarked"][train["Embarked"] == "S" ] = 0
-train["Embarked"][train["Embarked"] == "C" ] = 1
-train["Embarked"][train["Embarked"] == "Q"] = 2
+train = pd.concat([train, pd.get_dummies(train["Embarked"], prefix="Embarked")], axis=1).drop(columns=["Embarked"])
+print(train)
+train["Sex"] = pd.get_dummies(train["Sex"], drop_first=True)
 
-test["Sex"][test["Sex"] == "male"] = 0
-test["Sex"][test["Sex"] == "female"] = 1
-test["Embarked"][test["Embarked"] == "S" ] = 0
-test["Embarked"][test["Embarked"] == "C" ] = 1
-test["Embarked"][test["Embarked"] == "Q"] = 2
+test = pd.concat([test, pd.get_dummies(test["Embarked"], prefix="Embarked")], axis=1).drop(columns=["Embarked"])
+test["Sex"] = pd.get_dummies(test["Sex"], drop_first=True)
+
 
 # check
 print(train.head(10))
@@ -76,3 +73,4 @@ my_tree_one = my_tree_one.fit(features_one, target)
 #                     special_characters=True)
 #graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
 #Image(graph.create_png())
+
